@@ -1,12 +1,17 @@
-// import React from 'react';
-// import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from "react-dom";
 import {createStore} from 'redux';
+import {Provider} from 'react-redux';
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
 
 const axios = require('axios')
+//сохранение данных в redux
 const store = createStore(result);
-
+//данные полученные из Json файла
 let result
 
+//Получение данных из Json файла запросом с сервера
 axios({
   method: 'get',
   url: 'http://dev.frevend.com/json/users.json'
@@ -16,45 +21,73 @@ axios({
     const names = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}`)
     console.log(names);
 
-    // new Vue({
-    //   el: '#app',
-    //   data: {
-    //     data: names,
-    //     perPage: 5,
-    //     pagination: {}
-    //   },
-    //   computed: {
-    //     collection() {
-    //       return this.paginate(this.data);
-    //     }
-    //   },
-    //   methods: {
-    //     setPage(p){
-    //       this.pagination = this.paginator(this.data.length, p);
-    //     },
-    //     paginate(data){
-    //       return _.slice(data, this.pagination.startIndex, this.pagination.endIndex + 1)
-    //     },
-    //     paginator(totalItems, currentPage){
-    //       var startIndex = (currentPage - 1) * this.perPage,
-    //       endIndex = Math.min(startIndex + this.perPage - 1, totalItems - 1);
-    //
-    //       return {
-    //         currentPage: currentPage,
-    //         startIndex: startIndex,
-    //         endIndex: endIndex,
-    //         pages: _.range(1, Math.ceil(totalItems / this.perPage) + 1)
-    //       };
-    //     }
-    //   },
-    //   created(){
-    //     this.setPage(1);
-    //   }
-    // })
+    //Пагинатор
+    class TodoApp extends React.Component {
+      constructor() {
+        super();
+        this.state = {
+          todos: names,
+          currentPage: 1,
+          todosPerPage: 5
+        };
+        this.handleClick = this.handleClick.bind(this);
+      }
+
+      handleClick(event) {
+        this.setState({
+          currentPage: Number(event.target.id)
+        });
+      }
+
+      render() {
+        const { todos, currentPage, todosPerPage } = this.state;
+
+        const indexOfLastTodo = currentPage * todosPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+        const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const renderTodos = currentTodos.map((todo, index) => {
+          return <li key={index}>{todo}</li>;
+        });
+
+        const pageNumbers = [];
+        for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
+          pageNumbers.push(i);
+        }
+
+        const renderPageNumbers = pageNumbers.map(number => {
+          return (
+            <li
+              key={number}
+              id={number}
+              onClick={this.handleClick}
+            >
+              {number}
+            </li>
+          );
+        });
+
+        return (
+          <div>
+            <ul>
+              {renderTodos}
+            </ul>
+            <ul id="page-numbers">
+              {renderPageNumbers}
+            </ul>
+          </div>
+        );
+      }
+    }
 
 }})
-
-// ReactDOM.render(
-//   <h2>Text</h2>,
-//   document.getElementById('fieldToShow')
-// );
+//Возможность получения данных из reducer
+function mapStateToProps(state){
+  return {
+    result: state.result
+  };
+//Пагинация
+  ReactDOM.render(
+    <TodoApp />,
+    document.getElementById('app')
+  );

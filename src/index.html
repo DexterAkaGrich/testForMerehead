@@ -2,38 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <title>Test for Merehead</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
     <style media="screen">
       body{
         padding: 50px;
       }
     </style>
 </head>
-<body>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <body>
 
-    <div id="fieldToShow"></div>
-    <div id="app" class="container">
-      <ul class="list-group">
-        <li v-for="item in collection" class="list-group-item">
-          {{ item }}
-        </li>
-      </ul>
-      <hr>
-      <div class="btn-toolbar">
-        <div class="btn-group">
-          <button class="btn btn-primary" v-for="p in pagination.pages" @click.prevent="setPage(p)">
-            {{p}}
-          </button>
-        </div>
-      </div>
-      Displaying from indexes {{ pagination.startIndex }} to {{pagination.endIndex}}
-    </div>
+    <div id="app"></div>
 
-    <script src="js/bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-</body>
+  </body>
 </html>
