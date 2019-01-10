@@ -1,9 +1,9 @@
 // import React from 'react';
 // import ReactDOM from "react-dom";
-// import {createStore} from 'redux';
+import {createStore} from 'redux';
 
 const axios = require('axios')
-// const store = createStore();
+const store = createStore(result);
 
 let result
 
@@ -51,8 +51,8 @@ axios({
     //     this.setPage(1);
     //   }
     // })
-  }
-})
+
+}})
 
 // ReactDOM.render(
 //   <h2>Text</h2>,
