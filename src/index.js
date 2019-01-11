@@ -1,23 +1,9 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from "react-dom";
-import {createStore} from 'redux';
-import {Provider} from 'react-redux';
-import React, {Component} from 'react';
-import {bindActionCreators} from 'redux';
 
-const axios = require('axios')
-//сохранение данных в redux
-const store = createStore(result);
-//данные полученные из Json файла
-let result
-
-//Получение данных из Json файла запросом с сервера
-axios({
-  method: 'get',
-  url: 'http://dev.frevend.com/json/users.json'
-}).then((response) => {
-  ({ data: result } = response)
-  if(result.users){
+function init (result) {
+    if(result.users){
     const names = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}`)
     console.log(names);
 
@@ -79,15 +65,32 @@ axios({
         );
       }
     }
+    //Возможность получения данных из reducer
+    // function mapStateToProps(state){
+    //   return {
+    //     result: state.result
+    //   }
+    // }
+    //Пагинация
+    ReactDOM.render(
+      <TodoApp />,
+      document.getElementById('root')
+    );
+  }
+}
 
-}})
-//Возможность получения данных из reducer
-function mapStateToProps(state){
-  return {
-    result: state.result
-  };
-//Пагинация
-  ReactDOM.render(
-    <TodoApp />,
-    document.getElementById('app')
-  );
+//Получение данных из Json файла запросом с сервера
+let result
+axios({
+  method: 'get',
+  url: 'http://dev.frevend.com/json/users.json'
+})
+  .then(response => {
+    ({ data: result } = response)
+  })
+  .catch(err => {
+    result = require('./users.fallback.json')
+  })
+  .finally(() => {
+    init(result)
+  })
