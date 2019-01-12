@@ -1,11 +1,33 @@
 import axios from 'axios';
 import React from 'react';
 import ReactDOM from "react-dom";
+// import {createStore} from 'redux';
+
+
 
 function init (result) {
     if(result.users){
     const names = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}`)
     console.log(names);
+
+    //Redux
+      class Store {
+        constructor(result){
+          this._state = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}. desc:  ${item.desc}`);
+        }
+
+        get state(){
+          return this._state;
+        }
+
+        update(){
+          this._state = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}. desc:  ${item.desc}`);
+        }
+      }
+
+      const store = new Store(result);
+      console.log(store.state);
+
                                                   //css
     let buttonStyle = {
       background: '#caddda',
@@ -96,7 +118,9 @@ function init (result) {
 }
 
 //Получение данных из Json файла запросом с сервера
+
 let result
+
 axios({
   method: 'get',
   url: 'http://dev.frevend.com/json/users.json'
@@ -110,3 +134,10 @@ axios({
   .finally(() => {
     init(result)
   })
+
+
+
+  // export default function configureStore(initialState) {
+  //     const store = createStore(rootReducer, initialState)
+  //       return store
+  //     }
