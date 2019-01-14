@@ -3,33 +3,14 @@ import React from 'react';
 import ReactDOM from "react-dom";
 // import {createStore} from 'redux';
 import {buttonStyle, liStyle} from './styleReactCSS';
+import Store from './store';
 
 function init (result) {
     if(result.users){
     const names = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}`)
     console.log(names);
 
-    //Redux
-      class Store {
-        constructor(result){
-          this._state = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}. desc:  ${item.desc}`);
-          this._callbacks = [];
-        }
-
-        get state(){
-          return this._state;
-        }
-
-        update(){
-          this._state = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}. desc:  ${item.desc}`);
-        }
-
-        subscribe(callback){
-          this._callbacks.push(callback);
-          return () => this._callbacks = this._callbacks.filter(cb => cb !== callback);
-        }
-      }
-
+//Redux
       const store = new Store(result);
       const unsubscribe = store.subscribe(() => console.log(store.state));
       store.subscribe(() => console.log(store.state));
