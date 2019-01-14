@@ -30,9 +30,7 @@ function init (result) {
       }
 
       const store = new Store(result);
-      console.log(store.state);
-
-
+      store.subscribe(() => console.log(store.state));
 
     //Пагинатор
     class TodoApp extends React.Component {
