@@ -8,12 +8,13 @@ import Store from './store';
 function init (result) {
     if(result.users){
     const names = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}`)
-    console.log(names);
+    // console.log(names);
 
 //Redux
       const store = new Store(result);
       const unsubscribe = store.subscribe(() => console.log(store.state));
       store.subscribe(() => console.log(store.state));
+      console.log(store.state);
 
     //Пагинатор
     class TodoApp extends React.Component {
