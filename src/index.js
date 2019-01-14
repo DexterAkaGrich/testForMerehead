@@ -26,10 +26,12 @@ function init (result) {
 
         subscribe(callback){
           this._callbacks.push(callback);
+          return () => this._callbacks = this._callbacks.filter(cb => cb !== callback);
         }
       }
 
       const store = new Store(result);
+      unsubscribe = store.subscribe(() => console.log(store.state));
       store.subscribe(() => console.log(store.state));
 
     //Пагинатор
