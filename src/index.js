@@ -2,8 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import ReactDOM from "react-dom";
 // import {createStore} from 'redux';
-
-
+import {buttonStyle, liStyle} from './styleReactCSS';
 
 function init (result) {
     if(result.users){
@@ -14,6 +13,7 @@ function init (result) {
       class Store {
         constructor(result){
           this._state = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}. desc:  ${item.desc}`);
+          this._callbacks = [];
         }
 
         get state(){
@@ -23,26 +23,16 @@ function init (result) {
         update(){
           this._state = result.users.map((item, index) => `${index + 1}) ${item.name} ${item.surname}. desc:  ${item.desc}`);
         }
+
+        subscribe(callback){
+          this._callbacks.push(callback);
+        }
       }
 
       const store = new Store(result);
       console.log(store.state);
 
-                                                  //css
-    let buttonStyle = {
-      background: '#caddda',
-      padding: '3px 7px',
-      color: '#494949',
-      border: '1px solid #666',
-      'font-size': '1.2em'
-    }
-    let liStyle = {
-      background: '#caddda',
-      padding: '3px 7px',
-      color: '#494949',
-      'list-style-type': 'none',
-      'font-size': '1.2em'
-    }
+
 
     //Пагинатор
     class TodoApp extends React.Component {
@@ -118,7 +108,6 @@ function init (result) {
 }
 
 //Получение данных из Json файла запросом с сервера
-
 let result
 
 axios({
@@ -134,7 +123,6 @@ axios({
   .finally(() => {
     init(result)
   })
-
 
 
   // export default function configureStore(initialState) {
