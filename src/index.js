@@ -31,7 +31,7 @@ function init (result) {
       }
 
       const store = new Store(result);
-      unsubscribe = store.subscribe(() => console.log(store.state));
+      const unsubscribe = store.subscribe(() => console.log(store.state));
       store.subscribe(() => console.log(store.state));
 
     //Пагинатор
